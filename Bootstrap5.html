@@ -56,6 +56,50 @@
         padding-right: 10px;
         padding-left: 0px;
       }
+      .red-text {
+        color: red !important;
+      }
+      .black-text {
+        color: black !important;
+      }
+      .red-background {
+        background-color: red !important;
+      }
+
+      /* Custom input style */
+      .custom-input {
+        position: relative;
+      }
+
+      .custom-input input {
+        padding-right: 25px; /* Space for the X mark */
+      }
+
+      .custom-input .invalid-feedback {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0 5px;
+        display: flex;
+        align-items: center;
+        background-color: red;
+        color: white;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .custom-input input:invalid + .invalid-feedback {
+        opacity: 1;
+      }
+
+      /* X mark style */
+      .custom-input .invalid-feedback::before {
+        content: 'X';
+        font-weight: bold;
+        margin-right: 5px;
+      }
       </style>
   </head>
 
@@ -74,7 +118,7 @@
                 <tr>
                   <td>First Name</td>
                   <td>
-                    <div class="input-group">
+                    <div class="input-group" >
                       <span class="input-group-text"
                         ><svg
                           class="bi bi-person-fill"
@@ -122,6 +166,7 @@
                         required
                       />
                       <div class="input-group-text invalid-feedback">
+               
                         Please supply your last name
                       </div>
                     </div>
@@ -254,8 +299,8 @@
                           Please select your state
                         </option>
                         <option value="AP">Andhra Pradesh</option>
-                        <option value="TN">Tamil Nadu</option>
-                        <option value="JK">Jammu And Kashmir</option>
+                        <option value="TN">Telangana</option>
+                        <option value="JK">Karnataka</option>
                       </select>
                     </div>
                   </td>
@@ -366,6 +411,120 @@
         );
       });
     })();
+    (function () {
+        "use strict";
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
+
+        // Function to add the red-text class to all text elements except "Project Description" and "Do you have hosting?"
+        function makeTextRedExceptFields() {
+          var textElements = document.querySelectorAll("td:not(:contains('Project Description')):not(:contains('Do you have hosting?'))");
+          textElements.forEach(function (element) {
+            element.classList.add("red-text");
+          });
+        }
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                makeTextRedExceptFields(); // Call the function to make text red except specified fields
+              }
+
+              var inputs = form.querySelectorAll("input");
+              inputs.forEach(function (input) {
+                var feedback = input.parentNode.querySelector(".invalid-feedback");
+                if (input.value === "") {
+                  feedback.classList.add("show");
+                } else {
+                  feedback.classList.remove("show");
+                }
+              });
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+      (function () {
+        "use strict";
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
+
+        // Function to add the red-text class to specific text elements
+        function makeTextRed() {
+          var textElements = document.querySelectorAll("td, .input-group-text.invalid-feedback");
+          textElements.forEach(function (element) {
+            element.classList.add("red-text");
+          });
+        }
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                makeTextRed(); // Call the function to make text red for all specified fields
+              }
+
+              var inputs = form.querySelectorAll("input");
+              inputs.forEach(function (input) {
+                var feedback = input.parentNode.querySelector(".invalid-feedback");
+                if (input.value === "") {
+                  feedback.classList.add("show");
+                } else {
+                  feedback.classList.remove("show");
+                }
+              });
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+      (function () {
+        "use strict";
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              var inputs = form.querySelectorAll("input");
+              inputs.forEach(function (input) {
+                var feedback = input.nextElementSibling;
+                if (input.value === "") {
+                  feedback.style.opacity = "1";
+                } else {
+                  feedback.style.opacity = "0";
+                }
+              });
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
     </script>
   </body>
 </html>
